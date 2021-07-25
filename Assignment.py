@@ -1,14 +1,18 @@
 import torch
 import fairseq
 import librosa
-import transformers
 
-cp_path = '/path/to/wav2vec.pt'
+
+
+cp_path = r'C:\Users\ashok kumar\Documents\fairseq/wav2vec_small.pt'
 model, cfg, task = fairseq.checkpoint_utils.load_model_ensemble_and_task([cp_path])
 
-speech , rate = librosa.load("Stairway_to_heaven",sr=16000)
+speech , rate = librosa.load("Stairway_to_Heaven",sr=16000)
+processor = Wav2Vec2Processor.from_pretrained("wav2vec_small.pt")
 
-input_values = tokenizer(speech,return_tensors='pt').input_values()
+
+z = model.feature_extractor(speech)
+c = model.feature_aggregator(z)
 
 
 
